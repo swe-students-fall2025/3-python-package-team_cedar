@@ -157,6 +157,22 @@ _PEP_TALKS = {
     ],
 }
 
+_AFFIRMATIONS = [
+    "You are 100% capable of finishing this assignment (eventually).",
+    "Progress > perfection.",
+    "You’re not behind — you’re just on your own timeline.",
+    "Even one line of code counts as productivity!",
+    "You’re basically the main character of this study session."
+]
+
+_CHALLENGES = [
+    "Study 10 pages without checking your phone.",
+    "Summarize the last topic in one sentence.",
+    "Do a 5-minute rapid-fire recall session.",
+    "Write a haiku about your subject.",
+    "Quiz yourself out loud — bonus points if you sound confident."
+]
+
 # Functions
 def _choose(lst, rnd):
     return lst[rnd.randrange(len(lst))]
@@ -266,3 +282,12 @@ def pep_talk(name: str = "friend", goal: str = "study 2 hours", theme: str = "wh
     talk = _choose(talks, rnd)
     
     return talk.format(name=name, goal=goal)
+
+def affirmation(seed: int | None = None) -> str:
+    rnd = random.Random(seed)
+    return _choose(_AFFIRMATIONS, rnd)
+
+
+def challenge(seed: int | None = None) -> str:
+    rnd = random.Random(seed)
+    return _choose(_CHALLENGES, rnd)

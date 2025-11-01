@@ -1,7 +1,7 @@
 import argparse, json
 from . import (
     study_tip, motivate, excuse, study_plan,
-    roast, break_idea, pomodoro_schedule, study_playlist, deadline_reminder, pep_talk
+    roast, break_idea, pomodoro_schedule, study_playlist, deadline_reminder, pep_talk, affirmation, challenge
 )
 
 def main():
@@ -19,6 +19,12 @@ def main():
     s9 = sub.add_parser("deadline"); s9.add_argument("--hours_left", type=int, required=True); s9.add_argument("--tone", default="funny")
     s10 = sub.add_parser("pep"); s10.add_argument("--name", default="friend"); s10.add_argument("--goal", default="study 2 hours"); s10.add_argument("--theme", default="wholesome"); s10.add_argument("--seed", type=int)
 
+    s11 = sub.add_parser("affirm")
+    s11.add_argument("--seed", type=int)
+
+    s12 = sub.add_parser("challenge")
+    s12.add_argument("--seed", type=int)
+
     args = p.parse_args()
     if args.cmd == "tip": print(study_tip(args.topic, "chaotic", args.seed))
     elif args.cmd == "motivate": print(motivate(args.style, args.seed))
@@ -30,5 +36,11 @@ def main():
     elif args.cmd == "playlist": print(json.dumps(study_playlist(args.mood, args.n, args.seed)))
     elif args.cmd == "deadline": print(deadline_reminder(args.hours_left, args.tone))
     elif args.cmd == "pep": print(pep_talk(args.name, args.goal, args.theme, args.seed))
+    elif args.cmd == "affirm":
+        print(affirmation(args.seed))
+    elif args.cmd == "challenge":
+        print(challenge(args.seed))
 
+if __name__ == "__main__":
+    main()
 
