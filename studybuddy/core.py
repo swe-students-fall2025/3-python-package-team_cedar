@@ -1,4 +1,5 @@
 import random
+from typing import Dict, List
 
 # Core data
 _TIPS = {
@@ -291,3 +292,42 @@ def affirmation(seed: int | None = None) -> str:
 def challenge(seed: int | None = None) -> str:
     rnd = random.Random(seed)
     return _choose(_CHALLENGES, rnd)
+
+
+def allocate_time(topics: Dict[str, int], total_minutes: int, min_chunk: int = 5) -> Dict[str, int]:
+    """
+    Allocate study minutes across topics by (non-negative) weight.
+
+    Returns dict[topic -> minutes], sum == total_minutes, each minutes >= 0 and % min_chunk == 0.
+    """
+    if total_minutes < 0 or min_chunk <= 0:
+        raise ValueError("total_minutes must be >= 0 and min_chunk > 0")
+    if not topics:
+        return {}
+
+    weights = {k: max(0, int(v)) for k, v in topics.items()}
+    total_w = sum(weights.values())
+
+    if total_w == 0:
+        avg = total_minutes / max(1, len(weights))
+        raw = {k: avg for k in weights}
+    else:
+        raw = {k: (total_minutes * w / total_w) for k, w in weights.items()}
+
+    alloc = {k: max(0, int(round(x / min_chunk) * min_chunk)) for k, x in raw.items()}
+
+    diff = total_minutes - sum(alloc.values())
+    if diff != 0:
+        keys = sorted(weights, key=lambda k: weights[k], reverse=True)
+        step = min_chunk if diff > 0 else -min_chunk
+        i = 0
+        while diff != 0 and keys:
+            k = keys[i % len(keys)]
+            if alloc[k] + step >= 0:
+                alloc[k] += step
+                diff -= step
+            i += 1
+            if i > 10000:
+                break
+
+    return alloc
