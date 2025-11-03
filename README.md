@@ -328,14 +328,6 @@ git push -u origin feat/your-feature-name
 7. After approval, merge into `main`
 8. Delete your feature branch
 
-### Git attribution tip
-Ensure commits show under your GitHub account:
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-```
-
-Use your GitHub-verified email or your `@users.noreply.github.com` email.
 
 ---
 
@@ -369,5 +361,3 @@ The CI badge at the top of this README shows the current build status.
 
 MIT — do cool things responsibly (and sarcastically). 
 ```
-
----
