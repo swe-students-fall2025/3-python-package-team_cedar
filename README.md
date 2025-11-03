@@ -280,7 +280,7 @@ Use your GitHub-verified email or your `username@users.noreply.github.com` email
 
 ---
 
-## 🧪 Continuous Integration
+## Continuous Integration
 
 Every pull request triggers automated testing via GitHub Actions on **Python 3.10** and **3.11**.
 
@@ -290,17 +290,17 @@ The CI badge at the top of this README shows the current build status.
 
 ---
 
-## 👥 Team Cedar
+## Team Cedar
 
 | Name | GitHub |
 |------|--------|
 | Nicole Zhang | [@chzzznn](https://github.com/chzzznn) |
 | Kylie | [@kylin1209](https://github.com/kylin1209) |
-| Plant | [@plant445](https://github.com/plant445) |
+| name | [@plant445](https://github.com/plant445) |
 
 ---
 
-## 🌐 PyPI Package
+## PyPI Package (Placeholder link)
 
 **https://pypi.org/project/studybuddy/**
 
