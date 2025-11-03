@@ -1,6 +1,8 @@
 # StudyBuddy — Your (Unhelpfully) Helpful Study Companion
 
-![CI](https://github.com/swe-students-fall2025/3-python-package-team_cedar/actions/workflows/ci.yml/badge.svg)
+**WorkFlow-Placeholder**
+
+---
 
 **StudyBuddy** is a lighthearted Python package that adds sarcasm, pep talks, and playful structure to your study routine. It gives you randomized study tips, motivational messages, funny excuses, and silly study plans to make your academic life a bit more entertaining.
 
@@ -268,17 +270,6 @@ git push -u origin feat/your-feature-name
 7. **After approval, merge** into `main`
 8. **Delete your feature branch**
 
-### Git attribution tip
-
-Ensure commits show under your GitHub account:
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-```
-
-Use your GitHub-verified email or your `username@users.noreply.github.com` email.
-
----
 
 ## Continuous Integration
 
