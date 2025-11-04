@@ -52,6 +52,15 @@ _STEPS = [
     "Google half the material.",
 ]
 
+
+_ROASTS = [
+    "Your study habits are like Wi-Fi at a coffee shop — weak and unreliable.",
+    "If procrastination was a sport, you'd be an Olympian.",
+    "You're doing amazing… at finding new ways to avoid studying."
+]
+
+
+
 # Functions
 def _choose(lst, rnd):
     return lst[rnd.randrange(len(lst))]
@@ -84,3 +93,7 @@ def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = 
             step = "Drink more coffee. " + step
         plan.append(f"Step {i+1}: {step}")
     return plan
+
+def roast(seed=None):
+    rnd = random.Random(seed)
+    return _choose(_ROASTS, rnd)
