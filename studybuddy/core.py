@@ -100,6 +100,13 @@ _PLAYLISTS = {
         "Pop Power – hooks that keep you awake",
         "Drill & Focus(?) – questionable, but effective",
     ],
+    "classical": [
+        "Bach: The Well-Tempered Clavier",
+        "Mozart for Studying – piano concertos",
+        "Debussy & Satie – airy impressionism",
+        "Baroque for Focus – steady rhythms",
+        "Ludovico Einaudi – modern minimal piano",
+    ],
 
 }
 
