@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: 
+    branches: [pipfile-experiment]
   push:
-    branches: 
+    branches: [pipfile-experiment]
 
 jobs:
   test:
