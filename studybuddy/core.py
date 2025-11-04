@@ -76,6 +76,25 @@ _BREAKS = [
     "Do nothing for 5 minutes. You’ve earned it.",
 ]
 
+
+# --- Playlists ---
+_PLAYLISTS = {
+    "focus": [
+        "Chillhop Essentials – Instrumental beats",
+        "Deep Focus – steady no-lyrics electronica",
+        "Coding Mode – subtle pulses, low distraction",
+        "Brain Food – downtempo, minimal vocals",
+        "Lo-Fi Beats – mellow study loops",
+    ],
+    "lofi": [
+        "lofi hip hop radio – beats to relax/study to",
+        "Late Night Lo-Fi – rainy window vibes",
+        "Cafe Lofi – warm, cozy instrumentals",
+        "Lo-Fi Piano – soft keys + vinyl crackle",
+        "Study & Sleep – ultra-gentle loops",
+    ],
+}
+
 _VALID_CAFFEINE = {"low", "high"}
 
 # internal helpers
@@ -110,6 +129,11 @@ def list_styles() -> List[str]:
 def list_reasons() -> List[str]:
     """Return available reasons for excuse()."""
     return sorted(_EXCUSES.keys())
+
+def list_vibes() -> list[str]:
+    """Return available vibes for playlist()."""
+    return sorted(_PLAYLISTS.keys())
+
 
 
 # public functions API
@@ -210,3 +234,28 @@ def secret(seed: Optional[int] = None) -> str:
         "Achievement: Survived another study session!",
         "StudyBuddy secretly believes in you.",
     ], rnd)
+
+
+def playlist(vibe: str = "focus", n: int = 3, seed: int | None = None) -> list[str]:
+    """
+    Suggest a study playlist (list of n items) for a given vibe.
+
+    Args:
+        vibe: one of list_vibes(); unknown -> 'focus'
+        n: number of suggestions (clamped to [1, 10])
+        seed: optional seed for reproducibility
+
+    Returns:
+        list[str]: n playlist suggestions (may repeat if n > pool size)
+    """
+    rnd = random.Random(seed)
+    if vibe not in _PLAYLISTS:
+        vibe = "focus"
+    n = max(1, min(10, n))
+    pool = _PLAYLISTS[vibe]
+
+    # If the pool is smaller than n, allow repeats; otherwise sample without replacement
+    if n <= len(pool):
+        return rnd.sample(pool, k=n)
+    else:
+        return [pool[rnd.randrange(len(pool))] for _ in range(n)]
