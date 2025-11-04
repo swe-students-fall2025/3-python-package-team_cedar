@@ -93,6 +93,14 @@ _PLAYLISTS = {
         "Lo-Fi Piano – soft keys + vinyl crackle",
         "Study & Sleep – ultra-gentle loops",
     ],
+    "hype": [
+        "Beast Mode – high-energy gym bangers",
+        "EDM Bangers – tempo > productivity (maybe)",
+        "Trap Motivation – bass + bravado",
+        "Pop Power – hooks that keep you awake",
+        "Drill & Focus(?) – questionable, but effective",
+    ],
+
 }
 
 _VALID_CAFFEINE = {"low", "high"}
