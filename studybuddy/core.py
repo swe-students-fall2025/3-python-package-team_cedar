@@ -78,77 +78,135 @@ _BREAKS = [
 
 _VALID_CAFFEINE = {"low", "high"}
 
+# internal helpers
+def _rng(seed: Optional[int]) -> random.Random:
+    """Private RNG factory to keep seeding consistent everywhere."""
+    return random.Random(seed)
 
-# Functions
-
-def weighted_choice(options, weights, rnd):
-    return rnd.choices(options, weights=weights, k=1)[0]
-
-def _choose(lst, rnd):
+def _choose(lst: List[str], rnd: random.Random) -> str:
+    """Safe random chooser (assumes non-empty list)."""
     return lst[rnd.randrange(len(lst))]
 
+def _weighted_choice(options: List[str], weights: List[float], rnd: random.Random) -> str:
+    """Safe weighted choice with basic validation."""
+    if not options:
+        raise ValueError("No options provided for weighted choice.")
+    if len(options) != len(weights):
+        raise ValueError("Options and weights must be the same length.")
+    if all(w == 0 for w in weights):
+        # Fallback to uniform if all weights are zero
+        return _choose(options, rnd)
+    return rnd.choices(options, weights=weights, k=1)[0]
 
-def study_tip(topic: str = "math", mood: str = "chaotic", seed: int | None = None) -> str:
-    """Return a humorous study tip."""
-    rnd = random.Random(seed)
+# public interpretation
+def list_topics() -> List[str]:
+    """Return available topics for study_tip()."""
+    return sorted(_TIPS.keys())
+
+def list_styles() -> List[str]:
+    """Return available styles for motivate()."""
+    return sorted(_MOTIVATIONS.keys()) + ["mixed"]
+
+def list_reasons() -> List[str]:
+    """Return available reasons for excuse()."""
+    return sorted(_EXCUSES.keys())
+
+
+# public functions API
+
+
+def study_tip(topic: str = "math", mood: str = "chaotic", seed: Optional[int] = None) -> str:
+    """
+    Return a humorous study tip.
+    Unknown topics default to 'math'.
+    """
+    rnd = _rng(seed)
     tips = _TIPS.get(topic, _TIPS["math"])
     return _choose(tips, rnd)
 
-
-def motivate(style="mixed", seed=None):
-    rnd = random.Random(seed)
+def motivate(style: str = "mixed", seed: Optional[int] = None) -> str:
+    """
+    Return a motivational message.
+    style: 'sarcastic' | 'genuine' | 'mixed'
+    """
+    rnd = _rng(seed)
     if style == "mixed":
         options = _MOTIVATIONS["sarcastic"] + _MOTIVATIONS["genuine"]
         weights = [0.7] * len(_MOTIVATIONS["sarcastic"]) + [0.3] * len(_MOTIVATIONS["genuine"])
-        return weighted_choice(options, weights, rnd)
-    else:
-        msgs = _MOTIVATIONS.get(style, _MOTIVATIONS["sarcastic"])
-        return _choose(msgs, rnd)
-    
-def excuse(reason: str = "homework", seed: int | None = None) -> str:
-    """Return a funny excuse for school mishaps."""
-    rnd = random.Random(seed)
+        return _weighted_choice(options, weights, rnd)
+    msgs = _MOTIVATIONS.get(style, _MOTIVATIONS["sarcastic"])
+    return _choose(msgs, rnd)
+
+def excuse(reason: str = "homework", seed: Optional[int] = None) -> str:
+    """
+    Return a funny excuse for academic mishaps.
+    Unknown reasons default to 'homework'.
+    """
+    rnd = _rng(seed)
     excuses = _EXCUSES.get(reason, _EXCUSES["homework"])
     return _choose(excuses, rnd)
 
-def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = None) -> list[str]:
-    """Return a list of 'study plan' steps."""
-    rnd = random.Random(seed)
+def study_plan(hours: int = 3, caffeine_level: str = "high", seed: Optional[int] = None) -> List[str]:
+    """
+    Return a list of study plan steps.
+    - hours clamped to [1, 5]
+    - caffeine_level in {'low','high'} (defaults to 'high' if unknown)
+    """
+    rnd = _rng(seed)
+    if hours < 1:
+        hours = 1
+    if hours > 5:
+        hours = 5
+    if caffeine_level not in _VALID_CAFFEINE:
+        caffeine_level = "high"
+
     plan = []
-    for i in range(min(hours, 5)):
+    for i in range(hours):
         step = _choose(_STEPS, rnd)
         if caffeine_level == "high" and "coffee" not in step.lower():
             step = "Drink more coffee. " + step
-        plan.append(f"Step {i+1}: {step}")
+        plan.append(f"Step {i + 1}: {step}")
     return plan
 
-def roast(seed=None):
-    rnd = random.Random(seed)
+def roast(seed: Optional[int] = None) -> str:
+    """Serve a light, lovingly savage roast."""
+    rnd = _rng(seed)
     return _choose(_ROASTS, rnd)
 
-def compliment(seed=None):
-    rnd = random.Random(seed)
+def compliment(seed: Optional[int] = None) -> str:
+    """Give the user a kind compliment."""
+    rnd = _rng(seed)
     return _choose(_COMPLIMENTS, rnd)
 
-
-def break_tip(seed=None):
-    rnd = random.Random(seed)
+def break_tip(seed: Optional[int] = None) -> str:
+    """Suggest a healthy mini-break."""
+    rnd = _rng(seed)
     return _choose(_BREAKS, rnd)
 
-def pomodoro_plan(sessions=3, seed=None):
-    rnd = random.Random(seed)
-    plan = []
+def pomodoro_plan(sessions: int = 3, seed: Optional[int] = None) -> List[str]:
+    """
+    Build a simple Pomodoro schedule.
+    sessions clamped to [1, 8]
+    """
+    rnd = _rng(seed)
+    if sessions < 1:
+        sessions = 1
+    if sessions > 8:
+        sessions = 8
+
+    plan: List[str] = []
+    verbs = ["Study hard", "Focus intensely", "Pretend to focus"]
     for i in range(1, sessions + 1):
-        work = rnd.choice(["Study hard", "Focus intensely", "Pretend to focus"])
+        work = _choose(verbs, rnd)
         plan.append(f"Pomodoro {i}: {work} for 25 min, then break 5 min.")
     plan.append("Final note: You've earned a long break (and a snack).")
     return plan
 
-def secret(seed=None):
-    rnd = random.Random(seed)
-    return rnd.choice([
+def secret(seed: Optional[int] = None) -> str:
+    """Easter egg."""
+    rnd = _rng(seed)
+    return _choose([
         "Secret unlocked: You deserve a nap.",
         "Achievement: Survived another study session!",
-        "StudyBuddy secretly believes in you."
-    ])
-
+        "StudyBuddy secretly believes in you.",
+    ], rnd)
