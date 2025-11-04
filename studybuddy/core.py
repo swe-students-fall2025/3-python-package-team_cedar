@@ -113,3 +113,13 @@ def compliment(seed=None):
     rnd = random.Random(seed)
     return _choose(_COMPLIMENTS, rnd)
 
+def pomodoro_plan(sessions=3, seed=None):
+    rnd = random.Random(seed)
+    plan = []
+    for i in range(1, sessions + 1):
+        work = rnd.choice(["Study hard", "Focus intensely", "Pretend to focus"])
+        plan.append(f"Pomodoro {i}: {work} for 25 min, then break 5 min.")
+    plan.append("Final note: You've earned a long break (and a snack).")
+    return plan
+
+
