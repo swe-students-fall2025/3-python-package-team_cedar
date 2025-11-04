@@ -1,9 +1,20 @@
 import argparse, json
 from . import (
-    study_tip, motivate, excuse, study_plan,
-    roast, break_idea, pomodoro_schedule, study_playlist, deadline_reminder, pep_talk
+    study_tip,
+    motivate,
+    excuse,
+    study_plan,
+    roast,
+    compliment,
+    break_tip,
+    pomodoro_plan,
+    playlist,
+    secret,
+    list_topics,
+    list_styles,
+    list_reasons,
+    list_vibes,
 )
-
 def main():
     p = argparse.ArgumentParser(prog="studybuddy", description="StudyBuddy CLI")
     sub = p.add_subparsers(dest="cmd", required=True)
