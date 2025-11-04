@@ -74,15 +74,48 @@ def main():
     args = parser.parse_args()
  
 
-    if args.cmd == "tip": print(study_tip(args.topic, "chaotic", args.seed))
-    elif args.cmd == "motivate": print(motivate(args.style, args.seed))
-    elif args.cmd == "excuse": print(excuse(args.reason, args.seed))
-    elif args.cmd == "plan": print("\n".join(study_plan(args.hours, args.caffeine, args.seed)))
-    elif args.cmd == "roast": print(roast(args.topic, args.intensity, args.seed))
-    elif args.cmd == "break": print(break_idea(args.minutes, args.activity, args.seed))
-    elif args.cmd == "pomodoro": print("\n".join(pomodoro_schedule(args.sessions, args.work, args.brk, args.long)))
-    elif args.cmd == "playlist": print(json.dumps(study_playlist(args.mood, args.n, args.seed)))
-    elif args.cmd == "deadline": print(deadline_reminder(args.hours_left, args.tone))
-    elif args.cmd == "pep": print(pep_talk(args.name, args.goal, args.theme, args.seed))
+   
+    if args.cmd == "tip":
+        print(study_tip(args.topic, "chaotic", args.seed))
 
+    elif args.cmd == "motivate":
+        print(motivate(args.style, args.seed))
 
+    elif args.cmd == "excuse":
+        print(excuse(args.reason, args.seed))
+
+    elif args.cmd == "plan":
+        for line in study_plan(args.hours, args.caffeine, args.seed):
+            print(line)
+
+    elif args.cmd == "roast":
+        print(roast(args.seed))
+
+    elif args.cmd == "compliment":
+        print(compliment(args.seed))
+
+    elif args.cmd == "break":
+        print(break_tip(args.seed))
+
+    elif args.cmd == "pomodoro":
+        for line in pomodoro_plan(args.sessions, args.seed):
+            print(line)
+
+    elif args.cmd == "playlist":
+        for item in playlist(args.vibe, args.n, args.seed):
+            print(f"- {item}")
+
+    elif args.cmd == "secret":
+        print(secret(args.seed))
+
+    elif args.cmd == "list-topics":
+        print("\n".join(list_topics()))
+
+    elif args.cmd == "list-styles":
+        print("\n".join(list_styles()))
+
+    elif args.cmd == "list-reasons":
+        print("\n".join(list_reasons()))
+
+    elif args.cmd == "list-vibes":
+        print("\n".join(list_vibes()))
