@@ -85,10 +85,10 @@ _BREAK_ACTIVITIES = {
         "Channel your inner flamingo with some one-legged stretches.",
     ],
     "walk": [
-        "Take a victory lap around your room (or building if you're feeling fancy).",
-        "Practice your 'deep in thought' stride around the block.",
+        "Take a relaxing walk around your room (or building if you're feeling fancy).",
+        "Practice your 'deep in thought' walk around the block.",
         "Walk to the kitchen and contemplate the meaning of snacks.",
-        "Do the 'I need fresh air but also Wi-Fi' outdoor shuffle.",
+        "Do the 'I need fresh air but also Wi-Fi' walk of balance.",
     ],
     "snack": [
         "Fuel up with brain food (chips count as brain food, right?).",
@@ -110,15 +110,15 @@ _PLAYLIST_MOODS = {
         "Songs That Make Cramming Feel Like a Dance Party",
     ],
     "chill": [
-        "Mellow Vibes for When You've Given Up on Deadlines",
-        "Relaxing Tunes for Stress-Free Procrastination",
-        "Calm Music to Help You Accept Your Academic Fate",
+        "Chill vibes only – lo-fi beats to relax to",
+        "Relaxing acoustic flow for study focus",
+        "Calm music to help you relax and chill out",
     ],
 }
 
 _DEADLINE_MESSAGES = {
     "panic": [
-        "Time to activate MAXIMUM OVERDRIVE mode!",
+        "Time to panic (just a little)! Activate MAXIMUM OVERDRIVE mode!",
         "This is fine. Everything is fine. *nervous laughter*",
         "Remember: pressure makes diamonds... or nervous breakdowns.",
         "It's crunch time! Time to crunch those... study materials.",
@@ -179,25 +179,21 @@ def _choose(lst, rnd):
     return lst[rnd.randrange(len(lst))]
 
 def study_tip(topic: str = "math", mood: str = "chaotic", seed: int | None = None) -> str:
-    """Return a humorous study tip."""
     rnd = random.Random(seed)
     tips = _TIPS.get(topic, _TIPS["math"])
     return _choose(tips, rnd)
 
 def motivate(style: str = "sarcastic", seed: int | None = None) -> str:
-    """Return a motivational or sarcastic message."""
     rnd = random.Random(seed)
     msgs = _MOTIVATIONS.get(style, _MOTIVATIONS["sarcastic"])
     return _choose(msgs, rnd)
 
 def excuse(reason: str = "homework", seed: int | None = None) -> str:
-    """Return a funny excuse for school mishaps."""
     rnd = random.Random(seed)
     excuses = _EXCUSES.get(reason, _EXCUSES["homework"])
     return _choose(excuses, rnd)
 
 def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = None) -> list[str]:
-    """Return a list of 'study plan' steps."""
     rnd = random.Random(seed)
     plan = []
     for i in range(min(hours, 5)):
@@ -208,98 +204,71 @@ def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = 
     return plan
 
 def roast(topic: str = "cs", intensity: int = 5, seed: int | None = None) -> str:
-    """Return a humorous roast about an academic topic."""
     rnd = random.Random(seed)
     roasts = _ROASTS.get(topic, _ROASTS["cs"])
     roast_msg = _choose(roasts, rnd)
-    
-    # Adjust intensity (1-10 scale)
+
     if intensity <= 3:
-        roast_msg = "Gently speaking... " + roast_msg.lower()
+        roast_msg = "gently speaking... " + roast_msg.lower()
     elif intensity >= 8:
         roast_msg = roast_msg.upper() + " 🔥"
-    
     return roast_msg
 
 def break_idea(minutes: int = 5, activity: str = "stretch", seed: int | None = None) -> str:
-    """Return a break activity suggestion."""
     rnd = random.Random(seed)
     activities = _BREAK_ACTIVITIES.get(activity, _BREAK_ACTIVITIES["stretch"])
     idea = _choose(activities, rnd)
-    
+
+    if activity not in _BREAK_ACTIVITIES:
+        activity = "stretch"
+
     if minutes <= 5:
         return f"Quick {minutes}-minute break: {idea}"
     else:
-        return f"Extended {minutes}-minute break: {idea} Take your time!"
+        return f"Extended {minutes}-minute break: take a {activity}! {idea}"
 
 def pomodoro_schedule(sessions: int = 4, work_minutes: int = 25, break_minutes: int = 5, long_break: int = 15) -> list[str]:
-    """Generate a Pomodoro timer schedule."""
     schedule = []
-    
     for i in range(sessions):
         schedule.append(f"Session {i+1}: Work for {work_minutes} minutes")
-        
         if (i + 1) % 4 == 0 and i < sessions - 1:
             schedule.append(f"Long break: {long_break} minutes")
         elif i < sessions - 1:
             schedule.append(f"Short break: {break_minutes} minutes")
-    
     schedule.append("🎉 Pomodoro session complete! Great work!")
     return schedule
 
 def study_playlist(mood: str = "focus", n: int = 3, seed: int | None = None) -> list[str]:
-    """Generate a study playlist based on mood."""
     rnd = random.Random(seed)
     playlists = _PLAYLIST_MOODS.get(mood, _PLAYLIST_MOODS["focus"])
-    
-    # Return n random playlists (with potential repeats if n > available playlists)
     selected = []
     for _ in range(n):
         selected.append(_choose(playlists, rnd))
-    
     return selected
 
 def deadline_reminder(hours_left: int, tone: str = "funny") -> str:
-    """Generate a deadline reminder message."""
     messages = _DEADLINE_MESSAGES.get(tone, _DEADLINE_MESSAGES["funny"])
-    
-    # Choose message based on urgency
     if hours_left <= 2:
-        if tone in _DEADLINE_MESSAGES:
-            base_msg = _DEADLINE_MESSAGES["panic"][0] if tone != "panic" else messages[0]
-        else:
-            base_msg = messages[0]
-    else:
-        rnd = random.Random()
-        base_msg = _choose(messages, rnd)
-    
-    # Format the message with hours if it contains placeholder
+        return _DEADLINE_MESSAGES["panic"][0]
+    rnd = random.Random()
+    base_msg = _choose(messages, rnd)
     return base_msg.format(hours=hours_left) if "{hours}" in base_msg else base_msg
 
 def pep_talk(name: str = "friend", goal: str = "study 2 hours", theme: str = "wholesome", seed: int | None = None) -> str:
-    """Generate a personalized pep talk."""
     rnd = random.Random(seed)
     talks = _PEP_TALKS.get(theme, _PEP_TALKS["wholesome"])
     talk = _choose(talks, rnd)
-    
     return talk.format(name=name, goal=goal)
 
 def affirmation(seed: int | None = None) -> str:
     rnd = random.Random(seed)
     return _choose(_AFFIRMATIONS, rnd)
 
-
 def challenge(seed: int | None = None) -> str:
     rnd = random.Random(seed)
     return _choose(_CHALLENGES, rnd)
 
-
 def allocate_time(topics: Dict[str, int], total_minutes: int, min_chunk: int = 5) -> Dict[str, int]:
-    """
-    Allocate study minutes across topics by (non-negative) weight.
-
-    Returns dict[topic -> minutes], sum == total_minutes, each minutes >= 0 and % min_chunk == 0.
-    """
     if total_minutes < 0 or min_chunk <= 0:
         raise ValueError("total_minutes must be >= 0 and min_chunk > 0")
     if not topics:
@@ -329,5 +298,4 @@ def allocate_time(topics: Dict[str, int], total_minutes: int, min_chunk: int = 5
             i += 1
             if i > 10000:
                 break
-
     return alloc

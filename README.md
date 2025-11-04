@@ -293,7 +293,7 @@ The CI badge at the top of this README shows the current build status.
 
 ## PyPI Package 
 
-**https://pypi.org/project/studybuddy-teamcedar/0.7.0/**
+**https://pypi.org/project/studybuddy-teamcedar/0.8.0/**
 
 ---
 

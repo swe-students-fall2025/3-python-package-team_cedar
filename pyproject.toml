@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "studybuddy_teamcedar"
-version = "0.7.0"
+version = "0.8.0"
 description = "A lighthearted Python package for funny study tips, excuses, and motivation."
 readme = "README.md"
 authors = [{name = "Team Cedar"}]
