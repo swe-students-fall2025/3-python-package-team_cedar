@@ -1,4 +1,5 @@
 import random
+from typing import List, Optional
 
 # Core data
 _TIPS = {
