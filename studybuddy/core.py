@@ -69,6 +69,11 @@ _COMPLIMENTS = [
     "we need to talk about how amazing you are",
 ]
 
+_BREAKS = [
+    "Stretch like you’re reaching for better grades.",
+    "Take a water break — hydration is brain fuel.",
+    "Do nothing for 5 minutes. You’ve earned it.",
+]
 
 
 
@@ -112,6 +117,11 @@ def roast(seed=None):
 def compliment(seed=None):
     rnd = random.Random(seed)
     return _choose(_COMPLIMENTS, rnd)
+
+
+def break_tip(seed=None):
+    rnd = random.Random(seed)
+    return _choose(_BREAKS, rnd)
 
 def pomodoro_plan(sessions=3, seed=None):
     rnd = random.Random(seed)
