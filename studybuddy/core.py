@@ -107,6 +107,13 @@ _PLAYLISTS = {
         "Baroque for Focus – steady rhythms",
         "Ludovico Einaudi – modern minimal piano",
     ],
+    "ambient": [
+        "Brian Eno – Music for Airports",
+        "Max Richter – Sleep (selected)",
+        "Carbon Based Lifeforms – soft space ambient",
+        "Nils Frahm – solo ambient piano",
+        "Rain & Brown Noise – pure background",
+    ],
 
 }
 
