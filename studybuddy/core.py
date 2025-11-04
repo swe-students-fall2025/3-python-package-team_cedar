@@ -57,6 +57,7 @@ _ROASTS = [
     "Your study habits are like Wi-Fi at a coffee shop — weak and unreliable.",
     "If procrastination was a sport, you'd be an Olympian.",
     "You're doing amazing… at finding new ways to avoid studying."
+    "Please dont tell me your actually trying??"
 ]
 
 
