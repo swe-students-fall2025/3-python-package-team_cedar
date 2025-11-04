@@ -61,6 +61,14 @@ _ROASTS = [
 ]
 
 
+_COMPLIMENTS = [
+    "You're sharper than your pencil!",
+    "Brains and beauty — unfair combo.",
+    "You make studying look… almost cool."
+]
+
+
+
 
 # Functions
 def _choose(lst, rnd):
@@ -98,3 +106,8 @@ def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = 
 def roast(seed=None):
     rnd = random.Random(seed)
     return _choose(_ROASTS, rnd)
+
+def compliment(seed=None):
+    rnd = random.Random(seed)
+    return _choose(_COMPLIMENTS, rnd)
+
