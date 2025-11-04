@@ -291,9 +291,9 @@ The CI badge at the top of this README shows the current build status.
 
 ---
 
-## PyPI Package (Placeholder link)
+## PyPI Package 
 
-**https://pypi.org/project/studybuddy/**
+**https://pypi.org/project/studybuddy-teamcedar/0.4.0/**
 
 ---
 
