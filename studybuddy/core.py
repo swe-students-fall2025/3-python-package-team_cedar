@@ -78,8 +78,13 @@ _BREAKS = [
 
 
 # Functions
+
+def weighted_choice(options, weights, rnd):
+    return rnd.choices(options, weights=weights, k=1)[0]
+
 def _choose(lst, rnd):
     return lst[rnd.randrange(len(lst))]
+
 
 def study_tip(topic: str = "math", mood: str = "chaotic", seed: int | None = None) -> str:
     """Return a humorous study tip."""
@@ -87,12 +92,17 @@ def study_tip(topic: str = "math", mood: str = "chaotic", seed: int | None = Non
     tips = _TIPS.get(topic, _TIPS["math"])
     return _choose(tips, rnd)
 
-def motivate(style: str = "sarcastic", seed: int | None = None) -> str:
-    """Return a motivational or sarcastic message."""
-    rnd = random.Random(seed)
-    msgs = _MOTIVATIONS.get(style, _MOTIVATIONS["sarcastic"])
-    return _choose(msgs, rnd)
 
+def motivate(style="mixed", seed=None):
+    rnd = random.Random(seed)
+    if style == "mixed":
+        options = _MOTIVATIONS["sarcastic"] + _MOTIVATIONS["genuine"]
+        weights = [0.7] * len(_MOTIVATIONS["sarcastic"]) + [0.3] * len(_MOTIVATIONS["genuine"])
+        return weighted_choice(options, weights, rnd)
+    else:
+        msgs = _MOTIVATIONS.get(style, _MOTIVATIONS["sarcastic"])
+        return _choose(msgs, rnd)
+    
 def excuse(reason: str = "homework", seed: int | None = None) -> str:
     """Return a funny excuse for school mishaps."""
     rnd = random.Random(seed)
@@ -132,4 +142,11 @@ def pomodoro_plan(sessions=3, seed=None):
     plan.append("Final note: You've earned a long break (and a snack).")
     return plan
 
+def secret(seed=None):
+    rnd = random.Random(seed)
+    return rnd.choice([
+        "Secret unlocked: You deserve a nap.",
+        "Achievement: Survived another study session!",
+        "StudyBuddy secretly believes in you."
+    ])
 
