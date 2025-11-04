@@ -56,15 +56,17 @@ _STEPS = [
 _ROASTS = [
     "Your study habits are like Wi-Fi at a coffee shop — weak and unreliable.",
     "If procrastination was a sport, you'd be an Olympian.",
-    "You're doing amazing… at finding new ways to avoid studying."
-    "Please dont tell me your actually trying??"
+    "You're doing amazing… at finding new ways to avoid studying.",
+    "Please dont tell me your actually trying??",
 ]
 
 
 _COMPLIMENTS = [
     "You're sharper than your pencil!",
     "Brains and beauty — unfair combo.",
-    "You make studying look… almost cool."
+    "You make studying look… almost cool.",
+    "Wow, is this what a natural genius looks like?",
+    "we need to talk about how amazing you are",
 ]
 
 
