@@ -7,8 +7,9 @@ verify_ssl = true
 pytest = "*"
 build = "*"
 twine = "*"
+tomli = "*"
+typing_extensions = "*"
 exceptiongroup = "*"
-typing-extensions = "*"
 
 [packages]
 twine = "*"
