@@ -76,6 +76,7 @@ _BREAKS = [
     "Do nothing for 5 minutes. You’ve earned it.",
 ]
 
+_VALID_CAFFEINE = {"low", "high"}
 
 
 # Functions
