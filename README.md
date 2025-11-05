@@ -288,6 +288,7 @@ The CI badge at the top of this README shows the current build status.
 | Nicole Zhang | [@chzzznn](https://github.com/chzzznn) |
 | Kylie Lin | [@kylin1209](https://github.com/kylin1209) |
 | Sean Tang | [@plant445](https://github.com/plant445) |
+| Jeaanmarck Ceant | [@jrc9921](https://github.com/Jeanmarck12) |
 
 ---
 
