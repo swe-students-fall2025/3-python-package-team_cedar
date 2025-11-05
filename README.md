@@ -286,14 +286,14 @@ The CI badge at the top of this README shows the current build status.
 | Name | GitHub |
 |------|--------|
 | Nicole Zhang | [@chzzznn](https://github.com/chzzznn) |
-| Kylie | [@kylin1209](https://github.com/kylin1209) |
+| Kylie Lin | [@kylin1209](https://github.com/kylin1209) |
 | Sean Tang | [@plant445](https://github.com/plant445) |
 
 ---
 
-## PyPI Package (Placeholder link)
+## PyPI Package 
 
-**https://pypi.org/project/studybuddy/**
+**https://pypi.org/project/studybuddy-teamcedar/0.8.0/**
 
 ---
 

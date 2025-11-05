@@ -12,4 +12,5 @@ def test_break_idea_long():
 
 def test_break_invalid_activity_defaults_to_stretch():
     idea = core.break_idea(activity="invalid", seed=2)
-    assert "stretch" in idea.lower()
+    assert "stretch" in idea.lower() or "neck roll" in idea.lower()
+

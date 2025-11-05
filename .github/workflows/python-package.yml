@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [pipfile-experiment]
   push:
-    branches: [ main ]
+    branches: [pipfile-experiment]
 
 jobs:
   test:
@@ -21,7 +21,7 @@ jobs:
       - name: Install pipenv
         run: python -m pip install --upgrade pip pipenv
       - name: Install dev dependencies
-        run: pipenv install --dev --deploy
+        run: pipenv --python $(which python) install --dev --deploy
       - name: Run tests
         run: pipenv run pytest -q
       - name: Build package

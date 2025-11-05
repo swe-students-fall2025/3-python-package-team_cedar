@@ -14,6 +14,10 @@ def test_affirmation_repeatable_with_seed():
 def test_affirmation_varies_without_seed():
     result1 = affirmation()
     result2 = affirmation()
+    assert isinstance(result1, str)
+    assert len(result1) > 0
+    result1 = affirmation()
+    result2 = affirmation()
     assert result1 != result2 
 
 def test_challenge_returns_string():
