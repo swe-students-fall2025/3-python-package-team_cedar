@@ -1,5 +1,4 @@
 import random
-from typing import List, Optional
 
 # Core data
 _TIPS = {
@@ -51,6 +50,127 @@ _STEPS = [
     "Panic productively for 90 minutes.",
     "Reward yourself with a snack break.",
     "Google half the material.",
+]
+
+_ROASTS = {
+    "cs": [
+        "Your code is like your dating life - full of bugs and nobody wants to debug it.",
+        "You code like you're trying to solve world hunger... one syntax error at a time.",
+        "Your algorithm is so inefficient, it makes bubble sort look like a speed demon.",
+        "I've seen more organized code in a toddler's finger painting.",
+        "Your variable names are more confusing than IKEA instructions.",
+    ],
+    "math": [
+        "Your math skills are so bad, calculators file restraining orders.",
+        "You approach equations like they're written in ancient hieroglyphs.",
+        "Your algebra is weaker than decaf coffee on a Monday morning.",
+        "You solve problems like you're playing mathematical roulette.",
+        "Your geometry is so off, even abstract art looks realistic in comparison.",
+    ],
+    "physics": [
+        "Your understanding of physics violates more laws than a parking ticket collector.",
+        "You handle momentum like you handle your life - poorly.",
+        "Your grasp of gravity is the only thing keeping your grades down.",
+        "You treat thermodynamics like it's thermo-optional-amics.",
+        "Your physics solutions defy more laws than they follow.",
+    ],
+}
+
+_BREAK_ACTIVITIES = {
+    "stretch": [
+        "Do the 'I've been sitting too long' neck roll dance.",
+        "Attempt yoga poses that would make a pretzel jealous.",
+        "Stretch like a cat who just discovered the concept of flexibility.",
+        "Channel your inner flamingo with some one-legged stretches.",
+    ],
+    "walk": [
+        "Take a relaxing walk around your room (or building if you're feeling fancy).",
+        "Practice your 'deep in thought' walk around the block.",
+        "Walk to the kitchen and contemplate the meaning of snacks.",
+        "Do the 'I need fresh air but also Wi-Fi' walk of balance.",
+    ],
+    "snack": [
+        "Fuel up with brain food (chips count as brain food, right?).",
+        "Have a philosophical discussion with your refrigerator contents.",
+        "Practice portion control by eating one cookie... at a time... repeatedly.",
+        "Conduct a scientific taste test of available snacks.",
+    ],
+}
+
+_PLAYLIST_MOODS = {
+    "focus": [
+        "Lofi Hip Hop Radio - beats to procrastinate/study to",
+        "Classical Music for People Who Think They're Sophisticated",
+        "Ambient Sounds That Definitely Won't Put You to Sleep",
+    ],
+    "energetic": [
+        "Upbeat Songs to Make You Feel Productive (Even If You're Not)",
+        "High-Energy Tracks for Last-Minute Panic Sessions",
+        "Songs That Make Cramming Feel Like a Dance Party",
+    ],
+    "chill": [
+        "Chill vibes only – lo-fi beats to relax to",
+        "Relaxing acoustic flow for study focus",
+        "Calm music to help you relax and chill out",
+    ],
+}
+
+_DEADLINE_MESSAGES = {
+    "panic": [
+        "Time to panic (just a little)! Activate MAXIMUM OVERDRIVE mode!",
+        "This is fine. Everything is fine. *nervous laughter*",
+        "Remember: pressure makes diamonds... or nervous breakdowns.",
+        "It's crunch time! Time to crunch those... study materials.",
+    ],
+    "funny": [
+        "Deadline approaching faster than your motivation to start working!",
+        "Time left: {hours} hours. Panic level: Moderate to severe.",
+        "Your deadline called - it's running fashionably early.",
+        "Breaking news: Local student discovers deadlines don't extend themselves.",
+    ],
+    "motivational": [
+        "You've got this! {hours} hours is plenty of time to work miracles!",
+        "Every hour counts - make them work for you!",
+        "You're closer to the finish line than you think!",
+        "Time to show this deadline who's boss!",
+    ],
+}
+
+_PEP_TALKS = {
+    "wholesome": [
+        "Hey {name}, you're doing great! {goal} is totally achievable.",
+        "{name}, remember that progress isn't always linear, but you're moving forward!",
+        "You've got the determination to reach your goal of {goal}, {name}!",
+        "Every small step towards {goal} counts, {name}. Keep it up!",
+    ],
+    "tough_love": [
+        "Listen up {name}, {goal} isn't going to happen by itself!",
+        "{name}, stop making excuses and start making progress on {goal}!",
+        "You want to achieve {goal}? Then quit talking and start doing, {name}!",
+        "Reality check, {name}: {goal} requires actual work, not just wishful thinking!",
+    ],
+    "funny": [
+        "{name}, your goal of {goal} is calling... it wants to know if you're still friends.",
+        "Hey {name}, {goal} just texted - it's wondering when you'll take it seriously!",
+        "{name}, your future self is judging your current commitment to {goal}.",
+        "Breaking news {name}: {goal} is still waiting for you to show up!",
+    ],
+}
+
+_AFFIRMATIONS = [
+    "You are 100% capable of finishing this assignment (eventually).",
+    "Progress > perfection.",
+    "You’re not behind — you’re just on your own timeline.",
+    "Even one line of code counts as productivity!",
+    "You’re basically the main character of this study session."
+]
+
+_CHALLENGES = [
+    "Study 10 pages without checking your phone.",
+    "Summarize the last topic in one sentence.",
+    "Do a 5-minute rapid-fire recall session.",
+    "Write a haiku about your subject.",
+    "Quiz yourself out loud — bonus points if you sound confident."
 ]
 
 
@@ -128,84 +248,27 @@ def _choose(lst: List[str], rnd: random.Random) -> str:
     """Safe random chooser (assumes non-empty list)."""
     return lst[rnd.randrange(len(lst))]
 
-def _weighted_choice(options: List[str], weights: List[float], rnd: random.Random) -> str:
-    """Safe weighted choice with basic validation."""
-    if not options:
-        raise ValueError("No options provided for weighted choice.")
-    if len(options) != len(weights):
-        raise ValueError("Options and weights must be the same length.")
-    if all(w == 0 for w in weights):
-        # Fallback to uniform if all weights are zero
-        return _choose(options, rnd)
-    return rnd.choices(options, weights=weights, k=1)[0]
-
-# public interpretation
-def list_topics() -> List[str]:
-    """Return available topics for study_tip()."""
-    return sorted(_TIPS.keys())
-
-def list_styles() -> List[str]:
-    """Return available styles for motivate()."""
-    return sorted(_MOTIVATIONS.keys()) + ["mixed"]
-
-def list_reasons() -> List[str]:
-    """Return available reasons for excuse()."""
-    return sorted(_EXCUSES.keys())
-
-def list_vibes() -> list[str]:
-    """Return available vibes for playlist()."""
-    return sorted(_PLAYLISTS.keys())
-
-
-
-# public functions API
-
-
-def study_tip(topic: str = "math", mood: str = "chaotic", seed: Optional[int] = None) -> str:
-    """
-    Return a humorous study tip.
-    Unknown topics default to 'math'.
-    """
-    rnd = _rng(seed)
+def study_tip(topic: str = "math", mood: str = "chaotic", seed: int | None = None) -> str:
+    """Return a humorous study tip."""
+    rnd = random.Random(seed)
     tips = _TIPS.get(topic, _TIPS["math"])
     return _choose(tips, rnd)
 
-def motivate(style: str = "mixed", seed: Optional[int] = None) -> str:
-    """
-    Return a motivational message.
-    style: 'sarcastic' | 'genuine' | 'mixed'
-    """
-    rnd = _rng(seed)
-    if style == "mixed":
-        options = _MOTIVATIONS["sarcastic"] + _MOTIVATIONS["genuine"]
-        weights = [0.7] * len(_MOTIVATIONS["sarcastic"]) + [0.3] * len(_MOTIVATIONS["genuine"])
-        return _weighted_choice(options, weights, rnd)
+def motivate(style: str = "sarcastic", seed: int | None = None) -> str:
+    """Return a motivational or sarcastic message."""
+    rnd = random.Random(seed)
     msgs = _MOTIVATIONS.get(style, _MOTIVATIONS["sarcastic"])
     return _choose(msgs, rnd)
 
-def excuse(reason: str = "homework", seed: Optional[int] = None) -> str:
-    """
-    Return a funny excuse for academic mishaps.
-    Unknown reasons default to 'homework'.
-    """
-    rnd = _rng(seed)
+def excuse(reason: str = "homework", seed: int | None = None) -> str:
+    """Return a funny excuse for school mishaps."""
+    rnd = random.Random(seed)
     excuses = _EXCUSES.get(reason, _EXCUSES["homework"])
     return _choose(excuses, rnd)
 
-def study_plan(hours: int = 3, caffeine_level: str = "high", seed: Optional[int] = None) -> List[str]:
-    """
-    Return a list of study plan steps.
-    - hours clamped to [1, 5]
-    - caffeine_level in {'low','high'} (defaults to 'high' if unknown)
-    """
-    rnd = _rng(seed)
-    if hours < 1:
-        hours = 1
-    if hours > 5:
-        hours = 5
-    if caffeine_level not in _VALID_CAFFEINE:
-        caffeine_level = "high"
-
+def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = None) -> list[str]:
+    """Return a list of 'study plan' steps."""
+    rnd = random.Random(seed)
     plan = []
     for i in range(hours):
         step = _choose(_STEPS, rnd)
@@ -247,37 +310,3 @@ def pomodoro_plan(sessions: int = 3, seed: Optional[int] = None) -> List[str]:
         plan.append(f"Pomodoro {i}: {work} for 25 min, then break 5 min.")
     plan.append("Final note: You've earned a long break (and a snack).")
     return plan
-
-def secret(seed: Optional[int] = None) -> str:
-    """Easter egg."""
-    rnd = _rng(seed)
-    return _choose([
-        "Secret unlocked: You deserve a nap.",
-        "Achievement: Survived another study session!",
-        "StudyBuddy secretly believes in you.",
-    ], rnd)
-
-
-def playlist(vibe: str = "focus", n: int = 3, seed: int | None = None) -> list[str]:
-    """
-    Suggest a study playlist (list of n items) for a given vibe.
-
-    Args:
-        vibe: one of list_vibes(); unknown -> 'focus'
-        n: number of suggestions (clamped to [1, 10])
-        seed: optional seed for reproducibility
-
-    Returns:
-        list[str]: n playlist suggestions (may repeat if n > pool size)
-    """
-    rnd = random.Random(seed)
-    if vibe not in _PLAYLISTS:
-        vibe = "focus"
-    n = max(1, min(10, n))
-    pool = _PLAYLISTS[vibe]
-
-    # If the pool is smaller than n, allow repeats; otherwise sample without replacement
-    if n <= len(pool):
-        return rnd.sample(pool, k=n)
-    else:
-        return [pool[rnd.randrange(len(pool))] for _ in range(n)]

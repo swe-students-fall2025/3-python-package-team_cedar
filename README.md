@@ -1,12 +1,12 @@
 # StudyBuddy — Your (Unhelpfully) Helpful Study Companion
 
-**WorkFlow-Placeholder**
+[![log github events](https://github.com/swe-students-fall2025/3-python-package-team_cedar/actions/workflows/event-logger.yml/badge.svg)](https://github.com/swe-students-fall2025/3-python-package-team_cedar/actions/workflows/event-logger.yml)
 
 ---
 
 **StudyBuddy** is a lighthearted Python package that adds sarcasm, pep talks, and playful structure to your study routine. It gives you randomized study tips, motivational messages, funny excuses, and silly study plans to make your academic life a bit more entertaining.
 
-- **PyPI:** https://pypi.org/project/studybuddy/
+- **PyPI:** https://pypi.org/project/studybuddy-teamcedar/0.8.0/
 - **Example app:** [`example.py`](./example.py)
 
 ---
@@ -286,14 +286,14 @@ The CI badge at the top of this README shows the current build status.
 | Name | GitHub |
 |------|--------|
 | Nicole Zhang | [@chzzznn](https://github.com/chzzznn) |
-| Kylie | [@kylin1209](https://github.com/kylin1209) |
-| name | [@plant445](https://github.com/plant445) |
+| Kylie Lin | [@kylin1209](https://github.com/kylin1209) |
+| Sean Tang | [@plant445](https://github.com/plant445) |
 
 ---
 
-## PyPI Package (Placeholder link)
+## PyPI Package 
 
-**https://pypi.org/project/studybuddy/**
+**https://pypi.org/project/studybuddy-teamcedar/0.8.0/**
 
 ---
 

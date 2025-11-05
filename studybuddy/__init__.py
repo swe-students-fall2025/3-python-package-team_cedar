@@ -1,5 +1,7 @@
 """studybuddy — Your (unhelpfully) helpful study companion."""
 
+"""studybuddy — Your (unhelpfully) helpful study companion."""
+
 from .core import (
     study_tip,
     motivate,
