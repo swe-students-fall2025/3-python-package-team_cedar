@@ -6,7 +6,7 @@
 
 **StudyBuddy** is a lighthearted Python package that adds sarcasm, pep talks, and playful structure to your study routine. It gives you randomized study tips, motivational messages, funny excuses, and silly study plans to make your academic life a bit more entertaining.
 
-- **PyPI:** https://pypi.org/project/studybuddy/
+- **PyPI:** https://pypi.org/project/studybuddy-teamcedar/0.8.0/
 - **Example app:** [`example.py`](./example.py)
 
 ---
