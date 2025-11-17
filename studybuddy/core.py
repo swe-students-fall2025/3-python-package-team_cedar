@@ -279,19 +279,22 @@ def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = 
     return plan
 
 def roast(intensity: int = 5, seed: Optional[int] = None) -> str:
-    """
-    Return a roast. Intensity ranges from 1–10.
-    Low intensity → gentler roast.
-    High intensity → harsher roast.
-    Tests only care that function accepts intensity and seed.
-    """
     rnd = _rng(seed)
 
-    roasts = _ROASTS_BY_TOPIC.get("cs", [])
+    # Base CS-style roast
+    base = _choose(_ROASTS_BY_TOPIC["cs"], rnd)
 
-    # intensity affects selection range
-    idx = rnd.randrange(len(roasts))
-    return roasts[idx]
+    if intensity <= 3:
+        return "Gently speaking… " + base.lower()
+
+    if intensity >= 8:
+        if rnd.random() < 0.5:
+            return base.upper()
+        else:
+            return base + " 🔥"
+
+    return base
+
 
 
 def compliment(seed: Optional[int] = None) -> str:
@@ -385,7 +388,7 @@ def secret(seed: Optional[int] = None) -> str:
 
 
 def allocate_time(topics: dict[str, int], total_minutes: int, min_chunk: int = 5) -> dict[str, int]:
-    """Allocate study time proportionally based on topic weights."""
+    """Allocate time so each chunk is a multiple of min_chunk and sums correctly."""
     if not topics:
         return {}
 
@@ -393,23 +396,34 @@ def allocate_time(topics: dict[str, int], total_minutes: int, min_chunk: int = 5
     if weight_sum == 0:
         return {k: 0 for k in topics}
 
-    # initial proportional allocation
-    alloc = {
-        k: max(min_chunk, int(total_minutes * (w / weight_sum)))
+    # First pass: proportional allocation rounded to nearest chunk
+    raw_alloc = {
+        k: int(total_minutes * (w / weight_sum))
         for k, w in topics.items()
     }
 
-    # fix rounding: adjust total to match total_minutes
+    # Convert to multiples of min_chunk
+    alloc = {k: max(min_chunk, (v // min_chunk) * min_chunk) for k, v in raw_alloc.items()}
+
+    # Adjust sum until it matches exactly
     diff = total_minutes - sum(alloc.values())
     keys = list(topics.keys())
 
     i = 0
     while diff != 0:
-        alloc[keys[i % len(keys)]] += 1 if diff > 0 else -1
-        diff += -1 if diff > 0 else 1
+        k = keys[i % len(keys)]
+        if diff > 0:
+            alloc[k] += min_chunk
+            diff -= min_chunk
+        else:
+            # Make sure not to drop below a chunk
+            if alloc[k] - min_chunk >= min_chunk:
+                alloc[k] -= min_chunk
+                diff += min_chunk
         i += 1
 
     return alloc
+
 
 
 def break_idea(minutes: int = 5, activity: str = "stretch", seed: Optional[int] = None) -> str:
@@ -418,26 +432,29 @@ def break_idea(minutes: int = 5, activity: str = "stretch", seed: Optional[int] 
     if activity not in _BREAK_ACTIVITIES:
         activity = "stretch"
 
-    options = _BREAK_ACTIVITIES[activity]
-    base = _choose(options, rnd)
+    base = _choose(_BREAK_ACTIVITIES[activity], rnd)
+
+    base = base + " (break)"
 
     if minutes > 5:
-        return f"{base} Take about {minutes} minutes."
+        return f"{base} — extended {minutes}-minute break."
 
     return base
+
 
 
 def deadline_reminder(hours_left: int, tone: str = "funny", seed: Optional[int] = None) -> str:
     rnd = _rng(seed)
 
+    # override tone for urgent deadlines
+    if hours_left <= 2:
+        tone = "panic"
+
     if tone not in _DEADLINE_MESSAGES:
         tone = "funny"
 
-    msgs = _DEADLINE_MESSAGES[tone]
-    msg = _choose(msgs, rnd)
-
+    msg = _choose(_DEADLINE_MESSAGES[tone], rnd)
     return msg.format(hours=hours_left)
-
 
 
 
@@ -454,18 +471,19 @@ def pep_talk(name: str, goal: str, theme: str = "wholesome", seed: Optional[int]
 
 
 def pomodoro_schedule(sessions: int, work_minutes: int = 25, break_minutes: int = 5) -> List[str]:
-    schedule = []
-
+    sched = []
     for i in range(1, sessions + 1):
-        schedule.append(f"Session {i}: Work for {work_minutes} minutes")
+        sched.append(f"Session {i}: Work for {work_minutes} minutes")
 
         if i < sessions:
             if i % 4 == 0:
-                schedule.append("Take a long break for 15 minutes")
+                sched.append("Long break — take 15 minutes")
             else:
-                schedule.append(f"Take a break for {break_minutes} minutes")
+                sched.append(f"Short break — take {break_minutes} minutes")
 
-    return schedule
+    sched.append("🎉 All sessions complete — great job!")
+    return sched
+
 
 
 def study_playlist(mood: str = "focus", n: int = 3, seed: Optional[int] = None) -> List[str]:
@@ -474,13 +492,12 @@ def study_playlist(mood: str = "focus", n: int = 3, seed: Optional[int] = None) 
     if mood not in _PLAYLIST_MOODS:
         mood = "focus"
 
-    items = _PLAYLIST_MOODS[mood]
-    result = []
+    options = _PLAYLIST_MOODS[mood].copy()
 
-    for _ in range(min(n, len(items))):
-        result.append(_choose(items, rnd))
+    rnd.shuffle(options)
 
-    return result
+    return options[:n]
+
 
 
 
