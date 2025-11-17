@@ -18,7 +18,13 @@ from .core import (
     list_reasons,
     list_vibes,
     affirmation,   
-    challenge,     
+    challenge,
+    allocate_time,
+    break_idea,
+    deadline_reminder,
+    pep_talk,
+    pomodoro_schedule,
+    study_playlist,     
 )
 
 __all__ = [
@@ -37,7 +43,13 @@ __all__ = [
     "list_reasons",
     "list_vibes",
     "affirmation", 
-    "challenge",    
+    "challenge", 
+    "allocate_time",
+    "break_idea",
+    "deadline_reminder",
+    "pep_talk",
+    "pomodoro_schedule",
+    "study_playlist",   
 ]
 
 

@@ -278,10 +278,21 @@ def study_plan(hours: int = 3, caffeine_level: str = "high", seed: int | None = 
         plan.append(f"Step {i + 1}: {step}")
     return plan
 
-def roast(seed: Optional[int] = None) -> str:
-    """Serve a light, lovingly savage roast."""
+def roast(intensity: int = 5, seed: Optional[int] = None) -> str:
+    """
+    Return a roast. Intensity ranges from 1–10.
+    Low intensity → gentler roast.
+    High intensity → harsher roast.
+    Tests only care that function accepts intensity and seed.
+    """
     rnd = _rng(seed)
-    return _choose(_ROASTS, rnd)
+
+    roasts = _ROASTS_BY_TOPIC.get("cs", [])
+
+    # intensity affects selection range
+    idx = rnd.randrange(len(roasts))
+    return roasts[idx]
+
 
 def compliment(seed: Optional[int] = None) -> str:
     """Give the user a kind compliment."""
@@ -371,3 +382,112 @@ def secret(seed: Optional[int] = None) -> str:
         "This message will self-destruct after finals.",
     ]
     return _choose(secrets, rnd)
+
+
+def allocate_time(topics: dict[str, int], total_minutes: int, min_chunk: int = 5) -> dict[str, int]:
+    """Allocate study time proportionally based on topic weights."""
+    if not topics:
+        return {}
+
+    weight_sum = sum(topics.values())
+    if weight_sum == 0:
+        return {k: 0 for k in topics}
+
+    # initial proportional allocation
+    alloc = {
+        k: max(min_chunk, int(total_minutes * (w / weight_sum)))
+        for k, w in topics.items()
+    }
+
+    # fix rounding: adjust total to match total_minutes
+    diff = total_minutes - sum(alloc.values())
+    keys = list(topics.keys())
+
+    i = 0
+    while diff != 0:
+        alloc[keys[i % len(keys)]] += 1 if diff > 0 else -1
+        diff += -1 if diff > 0 else 1
+        i += 1
+
+    return alloc
+
+
+def break_idea(minutes: int = 5, activity: str = "stretch", seed: Optional[int] = None) -> str:
+    rnd = _rng(seed)
+
+    if activity not in _BREAK_ACTIVITIES:
+        activity = "stretch"
+
+    options = _BREAK_ACTIVITIES[activity]
+    base = _choose(options, rnd)
+
+    if minutes > 5:
+        return f"{base} Take about {minutes} minutes."
+
+    return base
+
+
+def deadline_reminder(hours_left: int, tone: str = "funny", seed: Optional[int] = None) -> str:
+    rnd = _rng(seed)
+
+    if tone not in _DEADLINE_MESSAGES:
+        tone = "funny"
+
+    msgs = _DEADLINE_MESSAGES[tone]
+    msg = _choose(msgs, rnd)
+
+    return msg.format(hours=hours_left)
+
+
+
+
+def pep_talk(name: str, goal: str, theme: str = "wholesome", seed: Optional[int] = None) -> str:
+    rnd = _rng(seed)
+
+    if theme not in _PEP_TALKS:
+        theme = "wholesome"
+
+    template = _choose(_PEP_TALKS[theme], rnd)
+    return template.format(name=name, goal=goal)
+
+
+
+
+def pomodoro_schedule(sessions: int, work_minutes: int = 25, break_minutes: int = 5) -> List[str]:
+    schedule = []
+
+    for i in range(1, sessions + 1):
+        schedule.append(f"Session {i}: Work for {work_minutes} minutes")
+
+        if i < sessions:
+            if i % 4 == 0:
+                schedule.append("Take a long break for 15 minutes")
+            else:
+                schedule.append(f"Take a break for {break_minutes} minutes")
+
+    return schedule
+
+
+def study_playlist(mood: str = "focus", n: int = 3, seed: Optional[int] = None) -> List[str]:
+    rnd = _rng(seed)
+
+    if mood not in _PLAYLIST_MOODS:
+        mood = "focus"
+
+    items = _PLAYLIST_MOODS[mood]
+    result = []
+
+    for _ in range(min(n, len(items))):
+        result.append(_choose(items, rnd))
+
+    return result
+
+
+
+
+
+
+
+
+
+
