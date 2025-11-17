@@ -17,6 +17,8 @@ from .core import (
     list_styles,
     list_reasons,
     list_vibes,
+    affirmation,   
+    challenge,     
 )
 
 __all__ = [
@@ -34,6 +36,9 @@ __all__ = [
     "list_styles",
     "list_reasons",
     "list_vibes",
+    "affirmation", 
+    "challenge",    
 ]
+
 
 __version__ = "0.1.0"

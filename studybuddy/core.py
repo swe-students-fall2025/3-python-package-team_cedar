@@ -53,7 +53,7 @@ _STEPS = [
     "Google half the material.",
 ]
 
-_ROASTS = {
+_ROASTS_BY_TOPIC = {
     "cs": [
         "Your code is like your dating life - full of bugs and nobody wants to debug it.",
         "You code like you're trying to solve world hunger... one syntax error at a time.",
@@ -312,41 +312,57 @@ def pomodoro_plan(sessions: int = 3, seed: Optional[int] = None) -> List[str]:
     plan.append("Final note: You've earned a long break (and a snack).")
     return plan
 
-def affirmation(seed: Optional[int] = None) -> str:
-    """Return an encouraging affirmation."""
-    rnd = _rng(seed)
-    return _choose(_AFFIRMATIONS, rnd)
-
-def challenge(seed: Optional[int] = None) -> str:
-    """Return a small study challenge."""
-    rnd = _rng(seed)
-    return _choose(_CHALLENGES, rnd)
-def playlist(vibe: str = "focus", n: int = 3, seed: Optional[int] = None) -> List[str]:
-    """Return n playlist suggestions for a given vibe."""
-    rnd = _rng(seed)
-    options = _PLAYLISTS.get(vibe, _PLAYLISTS["focus"])
-    results = []
-    for _ in range(min(n, len(options))):
-        pick = _choose(options, rnd)
-        results.append(pick)
-    return results
-
+# --- Discoverability helpers ---
 def list_topics() -> List[str]:
     """Return valid study tip topics."""
     return list(_TIPS.keys())
+
+
+def list_styles() -> List[str]:
+    """Return valid motivation styles."""
+    return list(_MOTIVATIONS.keys())
 
 
 def list_reasons() -> List[str]:
     """Return valid excuse reasons."""
     return list(_EXCUSES.keys())
 
+
 def list_vibes() -> List[str]:
     """Return valid playlist vibes."""
     return list(_PLAYLISTS.keys())
 
 
+# --- Playlist function ---
+def playlist(vibe: str = "focus", n: int = 3, seed: Optional[int] = None) -> List[str]:
+    """Return n playlist suggestions for a given vibe."""
+    rnd = _rng(seed)
+    options = _PLAYLISTS.get(vibe, _PLAYLISTS["focus"])
+    results: List[str] = []
+
+    for _ in range(min(n, len(options))):
+        results.append(_choose(options, rnd))
+
+    return results
+
+
+# --- Affirmations ---
+def affirmation(seed: Optional[int] = None) -> str:
+    """Return an encouraging affirmation."""
+    rnd = _rng(seed)
+    return _choose(_AFFIRMATIONS, rnd)
+
+
+# --- Challenges ---
+def challenge(seed: Optional[int] = None) -> str:
+    """Return a small study challenge."""
+    rnd = _rng(seed)
+    return _choose(_CHALLENGES, rnd)
+
+
+# --- Secret easter egg ---
 def secret(seed: Optional[int] = None) -> str:
-    """Return a tiny easter egg message."""
+    """Return a tiny easter egg."""
     rnd = _rng(seed)
     secrets = [
         "You found the secret mode. Congratulations, Agent StudyBuddy.",
