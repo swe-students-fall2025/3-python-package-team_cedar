@@ -1,4 +1,5 @@
 import random
+from typing import Optional, List
 
 # Core data
 _TIPS = {
@@ -310,3 +311,13 @@ def pomodoro_plan(sessions: int = 3, seed: Optional[int] = None) -> List[str]:
         plan.append(f"Pomodoro {i}: {work} for 25 min, then break 5 min.")
     plan.append("Final note: You've earned a long break (and a snack).")
     return plan
+
+def affirmation(seed: Optional[int] = None) -> str:
+    """Return an encouraging affirmation."""
+    rnd = _rng(seed)
+    return _choose(_AFFIRMATIONS, rnd)
+
+def challenge(seed: Optional[int] = None) -> str:
+    """Return a small study challenge."""
+    rnd = _rng(seed)
+    return _choose(_CHALLENGES, rnd)
