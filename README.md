@@ -15,7 +15,7 @@
 
 From PyPI (recommended):
 ```bash
-pip install studybuddy
+pip install studybuddy_teamcedar
 ```
 
 From source:
