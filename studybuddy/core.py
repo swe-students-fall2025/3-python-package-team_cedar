@@ -321,3 +321,37 @@ def challenge(seed: Optional[int] = None) -> str:
     """Return a small study challenge."""
     rnd = _rng(seed)
     return _choose(_CHALLENGES, rnd)
+def playlist(vibe: str = "focus", n: int = 3, seed: Optional[int] = None) -> List[str]:
+    """Return n playlist suggestions for a given vibe."""
+    rnd = _rng(seed)
+    options = _PLAYLISTS.get(vibe, _PLAYLISTS["focus"])
+    results = []
+    for _ in range(min(n, len(options))):
+        pick = _choose(options, rnd)
+        results.append(pick)
+    return results
+
+def list_topics() -> List[str]:
+    """Return valid study tip topics."""
+    return list(_TIPS.keys())
+
+
+def list_reasons() -> List[str]:
+    """Return valid excuse reasons."""
+    return list(_EXCUSES.keys())
+
+def list_vibes() -> List[str]:
+    """Return valid playlist vibes."""
+    return list(_PLAYLISTS.keys())
+
+
+def secret(seed: Optional[int] = None) -> str:
+    """Return a tiny easter egg message."""
+    rnd = _rng(seed)
+    secrets = [
+        "You found the secret mode. Congratulations, Agent StudyBuddy.",
+        "Shhh… the textbooks are watching.",
+        "✨ You unlocked +1 study luck.",
+        "This message will self-destruct after finals.",
+    ]
+    return _choose(secrets, rnd)
